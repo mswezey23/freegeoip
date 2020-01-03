@@ -17,9 +17,9 @@ ENV FREEGEOIP_CUSTOM_UPDATES_URL=${INITIAL_DATABASE_URL}
 COPY entrypoint.sh /entrypoint.sh
 
 RUN chmod +x /entrypoint.sh; \
-    if [ -n "$FREEGEOIP_CUSTOM_UPDATES_URL" ]; then \
-    curl -fSLo /db.gz "${FREEGEOIP_CUSTOM_UPDATES_URL}"; \
-    fi
+	if [ -n "$FREEGEOIP_CUSTOM_UPDATES_URL" ]; then \
+	curl -fSLo /db.gz "${FREEGEOIP_CUSTOM_UPDATES_URL}"; \
+	fi
 
 ENV FREEGEOIP_UPDATE_INTERVAL 24h
 ENV FREEGEOIP_RETRY_INTERVAL 6h

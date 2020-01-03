@@ -5,7 +5,9 @@
 package freegeoip
 
 import (
+	"strings"
 	"compress/gzip"
+	"archive/tar"
 	"crypto/md5"
 	"encoding/hex"
 	"errors"
@@ -20,7 +22,7 @@ import (
 	"path/filepath"
 	"sync"
 	"time"
-
+	
 	"github.com/howeyc/fsnotify"
 	"github.com/oschwald/maxminddb-golang"
 )
@@ -196,18 +198,39 @@ func (db *DB) newReader(dbfile string) (*maxminddb.Reader, string, error) {
 		return nil, "", err
 	}
 	defer f.Close()
+
 	gzf, err := gzip.NewReader(f)
 	if err != nil {
 		return nil, "", err
 	}
 	defer gzf.Close()
-	b, err := ioutil.ReadAll(gzf)
-	if err != nil {
-		return nil, "", err
-	}
-	checksum := fmt.Sprintf("%x", md5.Sum(b))
-	mmdb, err := maxminddb.FromBytes(b)
-	return mmdb, checksum, err
+
+	tarReader := tar.NewReader(gzf)
+
+	for {
+		header, err := tarReader.Next()
+
+		if err == io.EOF {
+			return nil, "", err
+		}
+
+		if err != nil {
+			fmt.Println(err)
+			os.Exit(1)
+		}
+
+		name := header.Name
+
+		if (header.Typeflag == tar.TypeReg && strings.HasSuffix(name, "mmdb")) {
+			b, err := ioutil.ReadAll(tarReader)
+			if err != nil {
+				return nil, "", err
+			}
+			checksum := fmt.Sprintf("%x", md5.Sum(b))
+			mmdb, err := maxminddb.FromBytes(b)
+			return mmdb, checksum, err
+		}
+	}	
 }
 
 func (db *DB) setReader(reader *maxminddb.Reader, modtime time.Time, checksum string) {
@@ -264,6 +287,7 @@ func (db *DB) runUpdate(url string) error {
 	if err != nil {
 		return err
 	}
+	// need to extract
 	err = db.renameFile(tmpfile)
 	if err != nil {
 		// Cleanup the tempfile if renaming failed.
@@ -309,6 +333,7 @@ func (db *DB) download(url string) (tmpfile string, err error) {
 		return "", err
 	}
 	defer f.Close()
+
 	_, err = io.Copy(f, resp.Body)
 	if err != nil {
 		return "", err
