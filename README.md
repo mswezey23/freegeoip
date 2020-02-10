@@ -1,12 +1,12 @@
-![freegeoip ipstack](https://raw.githubusercontent.com/apilayer/freegeoip/master/freegeo-warning.png)
+![freegeoip ipstack](https://raw.githubusercontent.com/circlingthesun/freegeoip/master/freegeo-warning.png)
 
 # freegeoip - Important Announcement
 
-*[The old freegeoip API is now deprecated and will be discontinued on July 1st, 2018]*
+_[The old freegeoip API is now deprecated and will be discontinued on July 1st, 2018]_
 
 Launched more than 6 years ago, the freegeoip.net API has grown into one of the biggest and most widely used APIs for IP to location services worldwide. The API is used by thousands of developers, SMBs and large corporations around the globe and is currently handling more than 2 billion requests per day. After years of operation and the API remaining almost unchanged, today we announce the complete re-launch of freegeoip into a faster, more advanced and more scalable API service called ipstack (https://ipstack.com). All users that wish to continue using our IP to location service will be required to sign up to obtain a free API access key and perform a few simple changes to their integration. While the new API offers the ability to return data in the same structure as the old freegeoip API, the new API structure offers various options of delivering much more advanced data for IP Addresses.
 
-## Required Changes to Legacy Integrations (freegeoip.net/json/xml) 
+## Required Changes to Legacy Integrations (freegeoip.net/json/xml)
 
 As of March 31 2018 the old freegeoip API is deprecated and a completely re-designed API is now accessible at http://api.ipstack.com. While the new API offers the same capabilities as the old one and also has the option of returning data in the legacy format, the API URL has now changed and all users are required to sign up for a free API Access Key to use the service.
 
@@ -18,20 +18,21 @@ Head over to https://ipstack.com and follow the instructions to create your acco
 
 The new API comes with a completely new endpoint (api.ipstack.com) and requires you to append your API Access Key to the URL as a GET parameter. For complete integration instructions, please head over to the API Documentation at https://ipstack.com/documentation. While the new API offers a completely reworked response structure with many additional data points, we also offer the option to receive results in the old freegeoip.net format in JSON or XML.
 
-To receive your API results in the old freegeoip format, please simply append &legacy=1 to the new API URL. 
+To receive your API results in the old freegeoip format, please simply append &legacy=1 to the new API URL.
 
 JSON Example: http://api.ipstack.com/186.116.207.169?access_key=YOUR_ACCESS_KEY&output=json&legacy=1
 
 XML Example: http://api.ipstack.com/186.116.207.169?access_key=YOUR_ACCESS_KEY&output=xml&legacy=1
 
 ## New features with ipstack
+
 While the new ipstack service now runs on a commercial/freemium model, we have worked hard at building a faster, more scalable, and more advanced IP to location API product. You can read more about all the new features by navigating to https://ipstack.com, but here's a list of the most important changes and additions:
 
 - We're still free for basic usage
 
 While we now offer paid / premium options for our more advanced users, our core product and IP to Country/Region/City product is still completely free of charge for up to 10,000 requests per month. If you need more advanced data or more requests, you can choose one of the paid plans listed at https://ipstack.com/product
 
--  Batch Requests
+- Batch Requests
 
 Need to validate more than 1 IP Address in a single API Call? Our new Bulk Lookup Feature (available on our paid plans) allows you to geolocate up to 50 IP Addresses in a single API Call.
 
@@ -53,16 +54,6 @@ While we want to keep the disruption to our current users as minimal as possible
 
 It's very important to ensure a smooth transition to ipstack for all freegeoip API users. If you are a developer that has published a plugin/addon that includes the legacy API, we recommend you get in touch with us and also share this announcement with your users. If you have any questions about the transition or the new API, please get in touch with us at support@ipstack.com
 
-
-
-
-
-
-
-
-
-
-
 # freegeoip - Deprecated Documentation
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
@@ -83,6 +74,7 @@ This section is for people who desire to run the freegeoip web server on their o
 
 Docker has [install instructions for many platforms](https://docs.docker.com/engine/installation/),
 including
+
 - [Ubuntu](https://docs.docker.com/engine/installation/linux/docker-ce/ubuntu/)
 - [CentOS](https://docs.docker.com/engine/installation/linux/docker-ce/centos/)
 - [Mac](https://docs.docker.com/docker-for-mac/install/)
@@ -90,7 +82,7 @@ including
 #### Run the API in a container
 
 ```bash
-docker run --restart=always -p 8080:8080 -d apilayer/freegeoip
+docker run --restart=always -p 8080:8080 -d circlingthesun/freegeoip
 ```
 
 #### Test
@@ -102,24 +94,24 @@ curl localhost:8080/json/1.2.3.4
 
 ### Other Linux, OS X, FreeBSD, and Windows
 
-There are [pre-compiled binaries](https://github.com/apilayer/freegeoip/releases) available.
+There are [pre-compiled binaries](https://github.com/circlingthesun/freegeoip/releases) available.
 
 ### Production configuration
 
 For production workloads you may want to use different configuration for the freegeoip web server, for example:
 
-* Enabling the "internal server" for collecting metrics and profiling/tracing the freegeoip web server on demand
-* Monitoring the internal server using [Prometheus](https://prometheus.io), or exporting your metrics to [New Relic](https://newrelic.com)
-* Serving the freegeoip API over HTTPS (TLS) using your own certificates, or provisioned automatically using [LetsEncrypt.org](https://letsencrypt.org)
-* Configuring [HSTS](https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security) to restrict your browser clients to always use HTTPS
-* Configuring the read and write timeouts to avoid stale clients consuming server resources
-* Configuring the freegeoip web server to read the client IP (for logs, etc) from the X-Forwarded-For header when running behind a reverse proxy
-* Configuring [CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing) to restrict access to your API to specific domains
-* Configuring a specific endpoint path prefix other than the default "/" (thus /json, /xml, /csv) to serve the API alongside other APIs on the same host
-* Optimizing your round trips by enabling [TCP Fast Open](https://en.wikipedia.org/wiki/TCP_Fast_Open) on your OS and the freegeoip web server
-* Setting up usage limits (quotas) for your clients (per client IP) based on requests per time interval; we support various backends such as in-memory map (for single instance), or redis or memcache for distributed deployments
-* Serve the default [GeoLite2 City](http://dev.maxmind.com/geoip/geoip2/geolite2/) free database that is downloaded and updated automatically in background on a configurable schedule, or
-* Serve the commercial [GeoIP2 City](https://www.maxmind.com/en/geoip2-city) database from MaxMind, either as a local file that you provide and update periodically (so the server can reload it), or configured to be downloaded periodically using your API key
+- Enabling the "internal server" for collecting metrics and profiling/tracing the freegeoip web server on demand
+- Monitoring the internal server using [Prometheus](https://prometheus.io), or exporting your metrics to [New Relic](https://newrelic.com)
+- Serving the freegeoip API over HTTPS (TLS) using your own certificates, or provisioned automatically using [LetsEncrypt.org](https://letsencrypt.org)
+- Configuring [HSTS](https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security) to restrict your browser clients to always use HTTPS
+- Configuring the read and write timeouts to avoid stale clients consuming server resources
+- Configuring the freegeoip web server to read the client IP (for logs, etc) from the X-Forwarded-For header when running behind a reverse proxy
+- Configuring [CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing) to restrict access to your API to specific domains
+- Configuring a specific endpoint path prefix other than the default "/" (thus /json, /xml, /csv) to serve the API alongside other APIs on the same host
+- Optimizing your round trips by enabling [TCP Fast Open](https://en.wikipedia.org/wiki/TCP_Fast_Open) on your OS and the freegeoip web server
+- Setting up usage limits (quotas) for your clients (per client IP) based on requests per time interval; we support various backends such as in-memory map (for single instance), or redis or memcache for distributed deployments
+- Serve the default [GeoLite2 City](http://dev.maxmind.com/geoip/geoip2/geolite2/) free database that is downloaded and updated automatically in background on a configurable schedule, or
+- Serve the commercial [GeoIP2 City](https://www.maxmind.com/en/geoip2-city) database from MaxMind, either as a local file that you provide and update periodically (so the server can reload it), or configured to be downloaded periodically using your API key
 
 See the [Server Options](#serveroptions) section below for more information on configuring the server.
 
@@ -132,13 +124,13 @@ For automation, check out the [freegeoip chef cookbook](https://supermarket.chef
 To see all the available options, use the `-help` option:
 
 ```bash
-docker run --rm -it apilayer/freegeoip -help
+docker run --rm -it circlingthesun/freegeoip -help
 ```
 
 If you're using LetsEncrypt.org to provision your TLS certificates, you have to listen for HTTPS on port 443. Following is an example of the server listening on 3 different ports: metrics + pprof (8888), http (80), and https (443):
 
 ```bash
-docker run -p 8888:8888 -p 80:8080 -p 443:8443 -d apilayer/freegeoip \
+docker run -p 8888:8888 -p 80:8080 -p 443:8443 -d circlingthesun/freegeoip \
 	-internal-server=:8888 \
 	-http=:8080 \
 	-https=:8443 \
@@ -147,7 +139,7 @@ docker run -p 8888:8888 -p 80:8080 -p 443:8443 -d apilayer/freegeoip \
 	-letsencrypt-hosts=myfancydomain.io
 ```
 
- You can configure the freegeiop web server via command line flags or environment variables. The names of environment variables are the same for command line flags, but prefixed with FREEGEOIP, all upperscase, separated by underscores. If you want to use environment variables instead:
+You can configure the freegeiop web server via command line flags or environment variables. The names of environment variables are the same for command line flags, but prefixed with FREEGEOIP, all upperscase, separated by underscores. If you want to use environment variables instead:
 
 ```bash
 $ cat prod.env
@@ -158,7 +150,7 @@ FREEGEOIP_HSTS=max-age=31536000
 FREEGEOIP_LETSENCRYPT=true
 FREEGEOIP_LETSENCRYPT_HOSTS=myfancydomain.io
 
-$ docker run --env-file=prod.env -p 8888:8888 -p 80:8080 -p 443:8443 -d apilayer/freegeoip
+$ docker run --env-file=prod.env -p 8888:8888 -p 80:8080 -p 443:8443 -d circlingthesun/freegeoip
 ```
 
 By default, HTTP/2 is enabled over HTTPS. You can disable by passing the `-http2=false` flag.
@@ -228,9 +220,9 @@ tl;dr if all you want is code then see the `example_test.go` file.
 
 Otherwise check out the godoc reference.
 
-[![GoDoc](https://godoc.org/github.com/apilayer/freegeoip?status.svg)](https://godoc.org/github.com/apilayer/freegeoip)
-[![Build Status](https://secure.travis-ci.org/apilayer/freegeoip.png)](http://travis-ci.org/apilayer/freegeoip)
-[![GoReportCard](https://goreportcard.com/badge/github.com/apilayer/freegeoip)](https://goreportcard.com/report/github.com/apilayer/freegeoip)
+[![GoDoc](https://godoc.org/github.com/circlingthesun/freegeoip?status.svg)](https://godoc.org/github.com/circlingthesun/freegeoip)
+[![Build Status](https://secure.travis-ci.org/circlingthesun/freegeoip.png)](http://travis-ci.org/circlingthesun/freegeoip)
+[![GoReportCard](https://goreportcard.com/badge/github.com/circlingthesun/freegeoip)](https://goreportcard.com/report/github.com/circlingthesun/freegeoip)
 
 ### Features
 
@@ -250,10 +242,10 @@ Besides the database part, the package provides an `http.Handler` object that yo
 
 Download the package:
 
-	go get -d github.com/apilayer/freegeoip/...
+    go get -d github.com/circlingthesun/freegeoip/...
 
 Install the web server:
 
-	go install github.com/apilayer/freegeoip/cmd/freegeoip
+    go install github.com/circlingthesun/freegeoip/cmd/freegeoip
 
 Test coverage is quite good, and test code may help you find the stuff you need.

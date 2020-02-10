@@ -13,7 +13,7 @@ import (
 
 	"github.com/kelseyhightower/envconfig"
 
-	"github.com/apilayer/freegeoip"
+	"github.com/circlingthesun/freegeoip"
 )
 
 // Config is the configuration of the freegeoip server.

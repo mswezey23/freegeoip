@@ -2,9 +2,9 @@ FROM golang:1.13
 
 COPY cmd/freegeoip/public /var/www
 
-ADD . /go/src/github.com/apilayer/freegeoip
+ADD . /go/src/github.com/circlingthesun/freegeoip
 RUN \
-	cd /go/src/github.com/apilayer/freegeoip/cmd/freegeoip && \
+	cd /go/src/github.com/circlingthesun/freegeoip/cmd/freegeoip && \
 	go mod download && go get -d && go install && \
 	apt-get update && apt-get install -y libcap2-bin && \
 	setcap cap_net_bind_service=+ep /go/bin/freegeoip && \
