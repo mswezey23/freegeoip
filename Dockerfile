@@ -12,7 +12,8 @@ RUN \
 	useradd -ms /bin/bash freegeoip
 
 ARG INITIAL_DATABASE_URL
-ENV FREEGEOIP_CUSTOM_UPDATES_URL=${INITIAL_DATABASE_URL}
+#ENV FREEGEOIP_CUSTOM_UPDATES_URL=${INITIAL_DATABASE_URL}
+ENV FREEGEOIP_CUSTOM_UPDATES_URL="https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-City&suffix=tar.gz&license_key=eYFXGPZHawIS"
 
 COPY entrypoint.sh /entrypoint.sh
 
